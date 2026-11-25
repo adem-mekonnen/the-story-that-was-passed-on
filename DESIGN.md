@@ -19,7 +19,7 @@ To demonstrate that cultural wisdom transcends time: what matters is not *when* 
 
 - **Primary Audio**: English (`en`). Selected to maximize reach and emotional comprehension among diaspora youth and international audiences who may have limited Amharic fluency.
 - **Subtitles**: English (`en`). Burned-in, mobile-optimized subtitles ensuring full clarity for sound-off mobile scrolling and hard-of-hearing viewers.
-- **Amharic Benchmark (Planned)**: Amharic narration is planned as a future ceiling benchmark stage to evaluate multilingual fidelity and localized linguistic nuances.
+- **Multilingual Localization (Completed)**: Amharic and Afaan Oromo completed (see `content/am` and `content/om`). Full localized 80s cuts with burned subtitles are generated via `--language am` and `--language om`.
 
 ---
 

@@ -18,7 +18,7 @@ In accordance with core design principles, **no experiment results are fabricate
 | `EXP-06` | 2026-11-25 | Narration | TTS style prompt steering modulates speech duration, inflection, and cadence without altering the underlying script. | `gemini-3.8-flash-tts` / Shot 04 (warm vs neutral) | `97d19760...` | "Neutral flat readout" yielded faster, detached delivery (5.89s) vs "warm unhurried storyteller" (5.68s, rich pauses). | **ACCEPTED**: Character-appropriate style prompts retained across all shots. |
 | `EXP-07` | 2026-11-25 | Assembly | Sidechain compression ducking threshold of 0.02 and ratio 6 preserves spoken dialogue intelligibility over acoustic strings. | FFmpeg `sidechaincompress` (0.02 vs 0.05 vs none) | `7996c9c7...` | Uncompressed mix masked narration vowels (max -7.4 dB). Aggressive ducking (0.05) pumped audibly. Threshold 0.02/ratio 6 cleanly dropped music 5.8 dB during speech. | **ACCEPTED**: Calibrated ducking parameters integrated into `assemble.py`. |
 | `EXP-08` | 2026-11-25 | Subtitles | Reducing vertical margin from 120 to 35 and limiting wrap to 40 chars/2 lines clears actor faces while respecting mobile safe zones. | `libass` style styling (`MarginV=120` -> `45` -> `35`) | `cf3c3961...` | `MarginV=120` placed text 41.6% up over faces; `MarginV=45` clipped macro seed hands. `MarginV=35` (12.1% from bottom) cleared all UI bars and focal subjects. | **ACCEPTED**: `MarginV=35, FontSize=12` established as global vertical style. |
-| `EXP-09` | 2026-11-25 | Pipeline | Deterministic SHA-256 sidecar hashing enables sub-second skip of unchanged assets, reducing compute and avoiding external API costs. | SHA-256 Sidecar Cache Engine (`is_cache_hit`) | Telemetry Ledger | 517 total operations achieved 77.2% overall cache hit rate (399 hits). User Test #1 rerun saved ~100s in image inference and prevented 10 Cloudflare calls. | **ACCEPTED**: Core caching primitives validated for 100% reproducible production. |
+| `EXP-09` | 2026-11-25 | Pipeline | Deterministic SHA-256 sidecar hashing enables sub-second skip of unchanged assets, reducing compute and avoiding external API costs. | SHA-256 Sidecar Cache Engine (`is_cache_hit`) | Telemetry Ledger | 762 total operations achieved 79.1% cache hit rate (603 hits; Snapshot at Milestone 6: 517 ops, 399 hits / 77.2%). User Test #1 rerun saved ~100s in image inference and prevented 10 Cloudflare calls. | **ACCEPTED**: Core caching primitives validated for 100% reproducible production. |
 | `EXP-10` | 2026-11-25 | Ceiling Work | Multilingual LLM translation and TTS stress test measures syllabic expansion and cross-lingual slot fit for Amharic and Afaan Oromo. | `gemini-2.5-flash` (translation) + `gemini-3.8-flash-tts` | `6b9da7e5...` | Amharic fit within English slot boundaries (shot 01: 9.97s/10s, shot 02: 5.00s/7s, shot 03: 4.69s/6s). Afaan Oromo exhibited agglutinative expansion (shot 01: 11.65s). | **ACCEPTED / BENCHMARKED**: Multilingual pipeline verified. `[NATIVE SPEAKER RATING: PENDING]` |
 
 ---
@@ -156,7 +156,7 @@ In accordance with core design principles, **no experiment results are fabricate
 ### Experiment [EXP-08]: 9:16 Vertical Safe-Area Subtitle Calibration
 - **Date**: 2026-11-25
 - **Stage**: assemble
-- **Target**: Mobile 9:16 Vertical Master ([heritage_short_vertical_9x16.mp4](file:///c:/Users/HP/Documents/the-story-that-was-passed-on/outputs/final/heritage_short_vertical_9x16.mp4))
+- **Target**: Mobile 9:16 Vertical Master ([heritage_short_vertical_9x16.mp4](outputs/final/heritage_short_vertical_9x16.mp4))
 - **Hypothesis**: Tuning `MarginV` in `libass` subtitle filters establishes exact clearance above mobile UI overlays (reels caption bar, engagement buttons) without intruding into character faces or hands.
 - **Iteration Ledger**:
   1. **v1 (Default MarginV=120, FontSize=20)**: Placed text 41.6% up from screen bottom, directly obscuring character mouths and chins in close-ups (`shot_03`, `shot_04`). **[REJECTED]**
@@ -172,9 +172,8 @@ In accordance with core design principles, **no experiment results are fabricate
 - **Target**: `runs.jsonl` Telemetry Ledger across Milestone 1 through Milestone 6
 - **Hypothesis**: Deterministic SHA-256 sidecar hashing enables granular asset invalidation, eliminating redundant cloud API calls and reducing iteration cycle latency by >75%.
 - **Measured Telemetry**:
-  - **Total Logged Pipeline Operations**: 517 operations.
-  - **Cache Hits**: 399 hits (**77.2% overall hit rate**).
-  - **Cumulative Cold Compute Tracked**: 3,366.21 seconds.
+  - **Current Production Run Count**: 762 total operations, 603 cache hits (**79.1% overall hit rate**), 5,190.36 seconds cumulative latency.
+  - **Snapshot at Milestone 6**: 517 operations, 399 hits (**77.2% overall hit rate**), 3,366.21 seconds cold compute tracked.
   - **User Test #1 Iteration (4 narrations + assemble)**: Skipped 6 unchanged narrations, 9 reference generations, 10 keyframe inference calls, and 9 video shot renders. Total cycle time dropped from ~12 minutes to 437 seconds, avoiding 10 Cloudflare inference calls ($0.00 cost preserved).
   - **Shot 01 Duration Adjustment (9s -> 10s)**: Reused 10/10 keyframes and 10/10 narrations; re-rendered only `shot_01.mp4` (6.47s) and re-assembled final MP4s.
 - **Verdict**: ACCEPTED. Incremental caching architecture validated for production efficiency.
@@ -184,7 +183,7 @@ In accordance with core design principles, **no experiment results are fabricate
 ### Experiment [EXP-10]: Multilingual Master Cut Production (Amharic & Afaan Oromo 9:16 Films)
 - **Date**: 2026-11-25
 - **Stage**: localization / script, narration, assemble
-- **Target**: Full 10-shot localized vertical 9:16 films ([heritage_short_am_9x16.mp4](file:///c:/Users/HP/Documents/the-story-that-was-passed-on/outputs/final/heritage_short_am_9x16.mp4) & [heritage_short_om_9x16.mp4](file:///c:/Users/HP/Documents/the-story-that-was-passed-on/outputs/final/heritage_short_om_9x16.mp4))
+- **Target**: Full 10-shot localized vertical 9:16 films ([heritage_short_am_9x16.mp4](outputs/final/heritage_short_am_9x16.mp4) & [heritage_short_om_9x16.mp4](outputs/final/heritage_short_om_9x16.mp4))
 - **Hypothesis**: Expanding Ceiling Work from 3-shot snippets into full standalone localized 9:16 films with dynamic FFmpeg `tpad=stop_mode=clone` video extension guarantees complete narrative delivery without cutting off speech syllables, while burning in timed English subtitles for diaspora and global audiences.
 - **Cultural Accuracy & Terminology**:
   - Afaan Oromo: Corrected grandfather translation from `Akkoo` (grandmother) to `Akaakayyuu` (grandfather), eliminated word repetition (no `sana sana`).
@@ -207,19 +206,19 @@ In accordance with core design principles, **no experiment results are fabricate
   | `shot_09` | 8.00s | 8.66s | 9.00s (EXTENDED) | 5.92s | 8.00s (OK) | Amharic elder dialogue expands +0.66s; extended by +1.0s via `tpad` |
   | `shot_10` | 8.00s | 7.43s | 8.00s (OK) | 6.88s | 8.00s (OK) | Fits comfortably within 8.00s slot |
 - **Final Master Film Metrics**:
-  - **Amharic 9:16 Master** ([heritage_short_am_9x16.mp4](file:///c:/Users/HP/Documents/the-story-that-was-passed-on/outputs/final/heritage_short_am_9x16.mp4)):
+  - **Amharic 9:16 Master** ([heritage_short_am_9x16.mp4](outputs/final/heritage_short_am_9x16.mp4)):
     * Duration: **80.90s** (inside 60–90s envelope)
     * File Size: **23.92 MB** (1080x1920, 24fps h264, AAC 256k)
     * Audio Loudness: `mean_volume: -16.5 dB`, `max_volume: -1.0 dB` (EBU R128 compliant)
     * Subtitles: Burned-in English subtitles timed to Amharic speech duration slots
-  - **Afaan Oromo 9:16 Master** ([heritage_short_om_9x16.mp4](file:///c:/Users/HP/Documents/the-story-that-was-passed-on/outputs/final/heritage_short_om_9x16.mp4)):
+  - **Afaan Oromo 9:16 Master** ([heritage_short_om_9x16.mp4](outputs/final/heritage_short_om_9x16.mp4)):
     * Duration: **80.10s** (inside 60–90s envelope)
     * File Size: **23.74 MB** (1080x1920, 24fps h264, AAC 256k)
     * Audio Loudness: `mean_volume: -16.6 dB`, `max_volume: -0.9 dB` (EBU R128 compliant)
     * Subtitles: Burned-in English subtitles timed to Afaan Oromo speech duration slots
   - **English Masters Preserved**:
-    * Horizontal 16:9 ([heritage_short_horizontal_16x9.mp4](file:///c:/Users/HP/Documents/the-story-that-was-passed-on/outputs/final/heritage_short_horizontal_16x9.mp4)): 79.00s, 36.96 MB (100% cache hit, untouched)
-    * Vertical 9:16 ([heritage_short_vertical_9x16.mp4](file:///c:/Users/HP/Documents/the-story-that-was-passed-on/outputs/final/heritage_short_vertical_9x16.mp4)): 79.00s, 23.57 MB (100% cache hit, untouched)
+    * Horizontal 16:9 ([heritage_short_horizontal_16x9.mp4](outputs/final/heritage_short_horizontal_16x9.mp4)): 79.00s, 36.96 MB (100% cache hit, untouched)
+    * Vertical 9:16 ([heritage_short_vertical_9x16.mp4](outputs/final/heritage_short_vertical_9x16.mp4)): 79.00s, 23.57 MB (100% cache hit, untouched)
 - **Native Speaker Assessment**:
   `[NATIVE SPEAKER RATING: PENDING]`
 - **Verdict**: ACCEPTED. Full multilingual localization pipeline operational with zero disruption to English master cuts.

@@ -1,7 +1,7 @@
 .PHONY: film dry-run validate test install
 
 film:
-	python -m pipeline.run
+	python -m pipeline.run --no-gpu
 
 dry-run:
 	python -m pipeline.run --dry-run

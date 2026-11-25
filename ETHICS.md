@@ -1,19 +1,19 @@
 # Ethics, Provenance & AI Governance
 
-"The Story That Was Passed On" is an 83-second cultural heritage short film created for the 10 Academy TRP2 challenge. This document outlines the ethical principles, asset provenance, licensing compliance, and disclosure standards applied throughout production.
+"The Story That Was Passed On" is a 79-second cultural heritage short film created for the 10 Academy TRP2 challenge. This document outlines the ethical principles, asset provenance, licensing compliance, and disclosure standards applied throughout production.
 
 ---
 
 ## 1. Fictional Character Composites & Identity Protection
 
-All characters depicted in this film are **100% fictional composite characters**. No likeness, portraiture, biometric data, or voice clone of any living or deceased individual was utilized.
+Zero real people are depicted. All characters are fictional composites. No likeness, portraiture, biometric data, or voice clone of any living or deceased individual was utilized.
 
 - **`elder_01` ("The Elder")**: A fictional elderly Ethiopian storyteller (approx. 70 years old), created as a visual archetype of village elders and traditional storytellers.
 - **`child_01` ("The Child")**: A fictional Ethiopian child (approx. 10 years old), representing curious youth in the diaspora and rural communities.
 - **`neighbour_01` ("The Neighbour")**: A fictional elderly villager, symbolizing community resilience and generosity during dry seasons.
 
 **Voice & likeness policy**:
-- Voiceover is synthesized exclusively using synthetic base voices provided through Gemini TTS (`voice: "Puck"`, directed via stylistic prompt metadata). No personal voice recordings or cloned voices of family members or actors were used.
+- Voiceover is synthesized exclusively using synthetic base voices provided through Gemini TTS across three differentiated voices: Narrator (`Puck`, "warm, calm, unhurried storyteller"), Child dialogue (`Zephyr`, "curious young child asking a heartfelt question, natural and gentle"), and Elder dialogue (`Charon`, "warm wise elderly grandfather speaking gently, unhurried"). No personal voice recordings or cloned voices of family members or actors were used.
 - Character visuals were generated purely from text prompts and stylistic descriptors ("Ethiopian heritage realism, 35mm film aesthetic") without referencing private individuals.
 
 ---
@@ -46,8 +46,11 @@ To prevent non-reproducible "hallucinated" outputs and ensure absolute auditabil
 In accordance with responsible AI practices and challenge guidelines, AI usage is disclosed both within the media container and on public channels:
 
 1. **3-Second End Card**:
-   - Duration: 3.0 seconds (timestamp 80.0s to 83.0s).
+   - Duration: 3.0 seconds (timestamp 76.0s to 79.0s).
    - Text: `"Created with AI-assisted tools. Story and production by the creator."`
    - Background: Solid black with clean typography.
 2. **Platform & Social Disclosure**:
-   - Any distribution of the final film will include explicit tags (`#AIContent`, `#AIArt`, `Generated with AI`) and full descriptions crediting the pipeline architecture, models used, and creative authorship.
+   - **Platform AI Label Toggles**: The "Altered or synthetic content" toggle must be enabled when publishing on YouTube, TikTok, Instagram Reels, and other social platforms in compliance with platform-specific AI transparency requirements.
+   - **Descriptive Attribution**: Any distribution includes explicit tags (`#AIContent`, `#AIArt`, `Generated with AI`) and full descriptions crediting the pipeline architecture, models used, and creative authorship.
+3. **SynthID & C2PA Metadata Provenance**:
+   - The production pipeline adheres to C2PA metadata provenance tracking standards and Google SynthID digital watermarking principles embedded by generative model endpoints, recording generation parameters, model identities, and cryptographic SHA-256 input hashes for verifiable origin disclosure.

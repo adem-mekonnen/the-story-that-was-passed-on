@@ -12,14 +12,14 @@ A contract-driven, deterministic, and fully reproducible AI media production pip
 
 ## 1. Overview & Master Film Outputs
 
-"The Story That Was Passed On" portrays the fireside conversation between an Ethiopian grandfather and his 10-year-old grandchild about why elders repeat the same ancestral stories. The production pipeline is controlled by a single strict contract ([storyboard.json](file:///c:/Users/HP/Documents/the-story-that-was-passed-on/storyboard.json)) and renders four final master short films:
+"The Story That Was Passed On" portrays the fireside conversation between an Ethiopian grandfather and his 10-year-old grandchild about why elders repeat the same ancestral stories. The production pipeline is controlled by a single strict contract ([storyboard.json](storyboard.json)) and renders four final master short films: the English master film is **79s** (79.00s), while running `--language am` and `--language om` creates the localized **80s cuts** (80.90s for Amharic and 80.10s for Afaan Oromo):
 
 | Film Cut | Language | Aspect Ratio | Resolution | Duration | File Size | Audio Loudness |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|
-| [heritage_short_horizontal_16x9.mp4](file:///c:/Users/HP/Documents/the-story-that-was-passed-on/outputs/final/heritage_short_horizontal_16x9.mp4) | English (`en`) | 16:9 | 1920x1080 | 79.00s | 36.96 MB | -14 LUFS (EBU R128) |
-| [heritage_short_vertical_9x16.mp4](file:///c:/Users/HP/Documents/the-story-that-was-passed-on/outputs/final/heritage_short_vertical_9x16.mp4) | English (`en`) | 9:16 | 1080x1920 | 79.00s | 23.57 MB | -14 LUFS (EBU R128) |
-| [heritage_short_am_9x16.mp4](file:///c:/Users/HP/Documents/the-story-that-was-passed-on/outputs/final/heritage_short_am_9x16.mp4) | Amharic (`am`) | 9:16 | 1080x1920 | 80.90s | 23.92 MB | -14 LUFS (EBU R128) |
-| [heritage_short_om_9x16.mp4](file:///c:/Users/HP/Documents/the-story-that-was-passed-on/outputs/final/heritage_short_om_9x16.mp4) | Afaan Oromo (`om`) | 9:16 | 1080x1920 | 80.10s | 23.74 MB | -14 LUFS (EBU R128) |
+| [heritage_short_horizontal_16x9.mp4](outputs/final/heritage_short_horizontal_16x9.mp4) | English (`en`) | 16:9 | 1920x1080 | 79.00s | 36.96 MB | -14 LUFS (EBU R128) |
+| [heritage_short_vertical_9x16.mp4](outputs/final/heritage_short_vertical_9x16.mp4) | English (`en`) | 9:16 | 1080x1920 | 79.00s | 23.57 MB | -14 LUFS (EBU R128) |
+| [heritage_short_am_9x16.mp4](outputs/final/heritage_short_am_9x16.mp4) | Amharic (`am`) | 9:16 | 1080x1920 | 80.90s | 23.92 MB | -14 LUFS (EBU R128) |
+| [heritage_short_om_9x16.mp4](outputs/final/heritage_short_om_9x16.mp4) | Afaan Oromo (`om`) | 9:16 | 1080x1920 | 80.10s | 23.74 MB | -14 LUFS (EBU R128) |
 
 All vertical 9:16 cuts feature mobile safe-area English subtitles (`MarginV=35, FontSize=12, Outline=2`), blurred pillarboxing for multi-person compositions, dynamic `tpad` video frame extensions, and native 3-second AI disclosure end cards.
 
@@ -39,7 +39,7 @@ Follow these steps to reproduce the entire project on a clean workstation.
 
 ### Step 1: Clone Repository & Bootstrap Environment
 ```bash
-git clone https://github.com/example/the-story-that-was-passed-on.git
+git clone https://github.com/adem-mekonnen/the-story-that-was-passed-on.git
 cd the-story-that-was-passed-on
 
 # Create virtual environment
@@ -100,8 +100,13 @@ python -m pipeline.run --no-gpu --language om
 ## 3. Offline & GPU Fallback Bridge
 
 The pipeline is engineered to run seamlessly across local workstations, cloud GPUs, and offline clean clones:
-1. **Video Bridge (`--no-gpu`)**: When executing without a CUDA GPU (or after Kaggle's 30 GB host RAM OOM ceiling during Wan 2.2 model offload), `shots.py` automatically synthesizes 24 fps H.264 video clips using programmatic FFmpeg Ken Burns camera choreography (`zoom_in_center`, `pan_right`, `zoom_out_center`, `pan_left`) operating directly on 1280x704 center-composed FLUX.2 Klein 4B keyframes.
-2. **Music Bridge**: `music.py` inspects `outputs/music/music_master_83s.wav`. If our authentic 48 kHz ACE-Step 1.5 score is present (from Kaggle T4), it verifies and mixes it. If cloned fresh without the score, it falls back cleanly to an FFmpeg ambient D minor chord pad, guaranteeing zero pipeline crashes.
+1. **Video Bridge (`--no-gpu`)**: When executing without a CUDA GPU (or after Kaggle's system RAM OOM crash during Wan 2.2 model offload), `shots.py` automatically synthesizes 24 fps H.264 video clips using programmatic FFmpeg Ken Burns camera choreography (`zoom_in_center`, `pan_right`, `zoom_out_center`, `pan_left`) operating directly on 1280x704 center-composed FLUX.2 Klein 4B keyframes.
+2. **Music Bridge**: `music.py` inspects `outputs/music/music_master_83s.wav`. If our authentic 48 kHz ACE-Step 1.5 score is present (from Kaggle T4), it verifies and mixes it. If missing, the pipeline falls back to an FFmpeg sine-pad.
+
+> [!NOTE]
+> Note: The final film uses FFmpeg Ken Burns motion. Wan 2.2 produced no clips due to Kaggle RAM limits. The real ACE-Step music is in `outputs/music/music_master_83s.wav`.
+> 
+> To use the real ACE-Step 1.5 music, download `music_master_83s.wav` and place it in `outputs/music/`. If missing, the pipeline falls back to an FFmpeg sine-pad.
 
 ---
 
@@ -121,14 +126,14 @@ The pipeline is engineered to run seamlessly across local workstations, cloud GP
 ├── EXPERIMENTS.md                      # Systematic scientific experiments (EXP-01 - EXP-10)
 ├── pytest.ini                          # Pytest configuration (testpaths = tests)
 ├── requirements.txt                    # Python package dependencies
-├── runs.jsonl                          # Structured audit log of all 676 model operations
+├── runs.jsonl                          # Structured audit log of all 762 model operations
 ├── storyboard.json                     # Canonical single contract (10 shots, 79s budget)
 ├── content/
 │   ├── am/                             # Amharic narration.json and subtitles.srt
 │   ├── en/                             # English subtitles.srt
 │   └── om/                             # Afaan Oromo narration.json and subtitles.srt
 ├── notebooks/
-│   ├── acel_step_colab.ipynb           # Colab ACE-Step audio experimentation
+│   ├── acestep_colab.ipynb             # Colab ACE-Step audio experimentation
 │   └── wan22_kaggle.ipynb              # Kaggle T4 Wan 2.2 video generation bridge
 ├── outputs/
 │   ├── final/                          # 4 Master short film MP4s + .hash sidecars
@@ -173,24 +178,24 @@ The pipeline is engineered to run seamlessly across local workstations, cloud GP
 
 | Metric | Measured Value |
 |:---|:---:|
-| **Total Operations Logged in `runs.jsonl`** | **676 operations** |
-| **Cache Hit Rate** | **77.4%** (523 hits / 153 cold calls) |
-| **Cumulative Measured Latency** | **4,501.61 seconds** (75.03 minutes) |
+| **Total Operations Logged in `runs.jsonl`** | **762 operations** |
+| **Cache Hit Rate** | **79.1%** (603 hits / 159 cold calls) |
+| **Cumulative Measured Latency** | **5,190.36 seconds** (86.51 minutes) |
 | **Actual Out-of-Pocket Expense** | **$0.00 USD** |
 | **Commercial List-Price Equivalent** | **~$0.26 USD** |
 
-*(For full per-stage breakdowns and provider telemetry, refer to [COSTS.md](file:///c:/Users/HP/Documents/the-story-that-was-passed-on/COSTS.md)).*
+*(For full per-stage breakdowns and provider telemetry, refer to [COSTS.md](COSTS.md)).*
 
 ---
 
 ## 6. License & AI Model Attributions
 
-- **Code & Pipeline**: Licensed under the [Apache 2.0 License](file:///c:/Users/HP/Documents/the-story-that-was-passed-on/LICENSE).
+- **Code & Pipeline**: Licensed under the [Apache 2.0 License](LICENSE).
 - **FLUX.2 Klein 4B**: Apache 2.0 (commercial permissible, zero non-commercial encumbrance).
 - **Wan 2.2 TI2V-5B**: Apache 2.0.
 - **ACE-Step 1.5-turbo**: MIT License.
 - **Google Gemini 3.8 / 3.1 / 2.5**: Google AI Studio Terms of Service. No real-person likenesses or private personal data sent.
-- **Ethics & Likeness**: Detailed character disclosures and provenance documentation available in [ETHICS.md](file:///c:/Users/HP/Documents/the-story-that-was-passed-on/ETHICS.md).
+- **Ethics & Likeness**: Detailed character disclosures and provenance documentation available in [ETHICS.md](ETHICS.md).
 
 ---
 
