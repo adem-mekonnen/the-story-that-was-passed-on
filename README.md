@@ -191,3 +191,15 @@ The pipeline is engineered to run seamlessly across local workstations, cloud GP
 - **ACE-Step 1.5-turbo**: MIT License.
 - **Google Gemini 3.8 / 3.1 / 2.5**: Google AI Studio Terms of Service. No real-person likenesses or private personal data sent.
 - **Ethics & Likeness**: Detailed character disclosures and provenance documentation available in [ETHICS.md](file:///c:/Users/HP/Documents/the-story-that-was-passed-on/ETHICS.md).
+
+---
+
+## Troubleshooting (Windows Specific)
+
+If you are running this pipeline on Windows, you might encounter a few system-level security blocks. Here is how to bypass them:
+
+**1. `python` is not recognized**
+If `python -m venv .venv` fails, use the Windows Python launcher instead:
+```powershell
+py -m venv .venv
+```
