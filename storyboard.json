@@ -1,0 +1,192 @@
+{
+  "schema_version": "1.0.0",
+  "project_title": "The Story That Was Passed On",
+  "target_duration_seconds": 79,
+  "aspect_ratios": ["9:16", "16:9"],
+  "language": "en",
+  "subtitle_language": "en",
+  "style_block": "cinematic Ethiopian heritage realism, warm natural evening light, 35mm film aesthetic, muted earth tones, shallow depth of field",
+  "characters": {
+    "elder_01": {
+      "name": "The Elder",
+      "description": "A fictional Ethiopian elderly man, approximately 70 years old, kind expressive eyes, natural wrinkles, short grey hair, wearing a simple traditional white handwoven cotton gabi over a tunic."
+    },
+    "child_01": {
+      "name": "The Child",
+      "description": "A fictional Ethiopian child, approximately 10 years old, curious expressive eyes, short natural hair, wearing simple modest earth-toned traditional-inspired cotton clothing."
+    },
+    "neighbour_01": {
+      "name": "The Neighbour",
+      "description": "A fictional frail elderly Ethiopian villager, weathered hands, wearing a worn beige cotton wrap."
+    }
+  },
+  "music": {
+    "prompt": "warm, contemplative Ethiopian heritage instrumental, acoustic krar and masenqo, gentle strings, soft percussion, hopeful and reflective",
+    "bpm": 72,
+    "key": "D minor",
+    "duration_seconds": 83,
+    "instrumental": true
+  },
+  "shots": [
+    {
+      "id": "shot_01",
+      "duration_seconds": 10,
+      "camera_shot": "wide establishing shot",
+      "purpose": "Establish the setting",
+      "characters_in_shot": [],
+      "character_refs": [],
+      "seed": 1101,
+      "use_video": false,
+      "image_prompt": "Wide landscape of a peaceful fictional Ethiopian highland village at sunset, traditional round thatched-roof tukuls along an empty dusty path, distant green hills, warm golden hour light, no people, no humans in frame.",
+      "motion_prompt": "Slow gentle camera glide toward a small traditional home. Soft breeze moving tree leaves.",
+      "narration": "The Story That Was Passed On. In a quiet Ethiopian village, an elderly man carried many stories in his heart.",
+      "subtitle": "The Story That Was Passed On. In a quiet Ethiopian village, an elderly man carried many stories in his heart.",
+      "music_cue": "Soft traditional-inspired acoustic instrumental introduction."
+    },
+    {
+      "id": "shot_02",
+      "duration_seconds": 7,
+      "camera_shot": "medium two-shot",
+      "purpose": "Introduce the characters",
+      "characters_in_shot": ["elder_01", "child_01"],
+      "character_refs": ["elder_01", "child_01"],
+      "seed": 1002,
+      "use_video": true,
+      "image_prompt": "An elderly Ethiopian man sitting beside a 10-year-old child on wooden stools outside a traditional home at dusk, warm glow of a small hearth fire, intimate composition.",
+      "motion_prompt": "Slow gentle camera push toward the child as the child turns to look at the elder.",
+      "narration": "One evening, as the sun set, the child asked him a question.",
+      "subtitle": "One evening, as the sun set, the child asked him a question.",
+      "music_cue": "Music softens into a quiet underscore."
+    },
+    {
+      "id": "shot_03",
+      "duration_seconds": 6,
+      "camera_shot": "close-up",
+      "purpose": "Present the central question",
+      "characters_in_shot": ["child_01"],
+      "character_refs": ["child_01"],
+      "seed": 1003,
+      "use_video": true,
+      "image_prompt": "Close-up of a curious 10-year-old Ethiopian child looking earnestly toward the elder, warm flickering firelight on face.",
+      "motion_prompt": "Subtle natural blinking and slight head tilt. Stable camera.",
+      "voice": "Zephyr",
+      "tts_style": "curious young child asking a heartfelt question, natural and gentle",
+      "narration": "Grandfather, why do you always tell us the same old stories?",
+      "subtitle": "Grandfather, why do you always tell us the same old stories?",
+      "music_cue": "Brief reflective pause."
+    },
+    {
+      "id": "shot_04",
+      "duration_seconds": 7,
+      "camera_shot": "close-up",
+      "purpose": "Begin the story within the story",
+      "characters_in_shot": ["elder_01"],
+      "character_refs": ["elder_01"],
+      "seed": 1004,
+      "use_video": true,
+      "image_prompt": "Close-up of the 70-year-old Ethiopian storyteller with a warm, gentle smile, soft firelight illuminating his wrinkled face and white cotton gabi.",
+      "motion_prompt": "Slow subtle push-in on the elder as he begins to speak. Gentle firelight flicker.",
+      "narration": "The elder smiled, and began telling a story about their village.",
+      "subtitle": "The elder smiled, and began telling a story about their village.",
+      "music_cue": "Gentle, warm storytelling melody begins."
+    },
+    {
+      "id": "shot_05",
+      "duration_seconds": 8,
+      "camera_shot": "wide shot",
+      "purpose": "Introduce the conflict",
+      "characters_in_shot": [],
+      "character_refs": [],
+      "seed": 5505,
+      "use_video": false,
+      "image_prompt": "Wide establishing landscape shot of a quiet Ethiopian highland village during a harsh dry season, cracked parched dirt path winding between traditional round thatched-roof tukuls, dry yellow grass, distant barren hills under pale afternoon sunlight, 35mm cinematic film still.",
+      "motion_prompt": "Slow panoramic pan across the dry, quiet village.",
+      "narration": "Years ago, a harsh dry season came to the land, and people began to worry.",
+      "subtitle": "Years ago, a harsh dry season came to the land, and people began to worry.",
+      "music_cue": "Music shifts to a slightly tense, serious tone."
+    },
+    {
+      "id": "shot_06",
+      "duration_seconds": 7,
+      "camera_shot": "medium shot",
+      "purpose": "Show the child's act of kindness",
+      "characters_in_shot": ["child_01", "neighbour_01"],
+      "character_refs": ["child_01", "neighbour_01"],
+      "seed": 1006,
+      "use_video": true,
+      "image_prompt": "Medium shot of a 10-year-old Ethiopian child outside a modest village home offering a small woven basket of injera to a frail elderly neighbour, warm natural light.",
+      "motion_prompt": "Gentle camera movement following the child stepping forward with the food.",
+      "narration": "Yet one child shared the little food they had with a struggling neighbour.",
+      "subtitle": "Yet one child shared the little food they had with a struggling neighbour.",
+      "music_cue": "A warmer, hopeful melodic theme enters."
+    },
+    {
+      "id": "shot_07",
+      "duration_seconds": 8,
+      "camera_shot": "macro close-up",
+      "purpose": "Insert shot of hands revealing the turning point",
+      "characters_in_shot": [],
+      "character_refs": [],
+      "seed": 1107,
+      "use_video": true,
+      "image_prompt": "Extreme macro close-up looking down at dark-skinned weathered elderly hands carefully placing one single heirloom grain seed into a child's small open palm, warm golden sunlight, shallow depth of field, no faces visible.",
+      "motion_prompt": "Slow gentle push-in toward the seed resting in the child's palm.",
+      "narration": "In return, the neighbour gave the child a single seed saved for planting.",
+      "subtitle": "In return, the neighbour gave the child a single seed saved for planting.",
+      "music_cue": "Hopeful instrumental theme swells gently."
+    },
+    {
+      "id": "shot_08",
+      "duration_seconds": 7,
+      "camera_shot": "medium wide shot",
+      "purpose": "Resolve the story within the story",
+      "characters_in_shot": ["child_01"],
+      "character_refs": ["child_01"],
+      "seed": 1008,
+      "use_video": false,
+      "image_prompt": "Several fictional Ethiopian villagers and the child kneeling together in morning sunlight, planting a green seedling in dark moist soil and pouring water from a clay pot.",
+      "motion_prompt": "Gentle movement of hands pressing soil around the seedling. Calm, steady camera.",
+      "narration": "Together, the village planted that seed, watered it, and watched it grow.",
+      "subtitle": "Together, the village planted that seed, watered it, and watched it grow.",
+      "music_cue": "Music rises into an uplifting arrangement."
+    },
+    {
+      "id": "shot_09",
+      "duration_seconds": 8,
+      "camera_shot": "medium close-up",
+      "purpose": "Deliver the lesson",
+      "characters_in_shot": ["elder_01", "child_01"],
+      "character_refs": ["elder_01", "child_01"],
+      "seed": 1009,
+      "use_video": true,
+      "image_prompt": "Return to the evening fireside: the 70-year-old storyteller looking kindly at the 10-year-old child who is listening deeply, warm evening firelight.",
+      "motion_prompt": "Slow camera push toward the child's thoughtful expression.",
+      "voice": "Charon",
+      "tts_style": "warm wise elderly grandfather speaking gently, unhurried",
+      "narration": "My child, what matters is not when a story happened, but what it teaches us.",
+      "subtitle": "My child, what matters is not when a story happened, but what it teaches us.",
+      "music_cue": "Music softens for the intimate closing exchange."
+    },
+    {
+      "id": "shot_10",
+      "duration_seconds": 8,
+      "camera_shot": "wide pull-back shot",
+      "purpose": "Complete the emotional journey",
+      "characters_in_shot": ["elder_01", "child_01"],
+      "character_refs": ["elder_01", "child_01"],
+      "seed": 1010,
+      "use_video": false,
+      "image_prompt": "The 10-year-old child animatedly speaking by the warm evening fire as the elderly man listens and smiles proudly beside the hearth, warm cinematic closing frame.",
+      "motion_prompt": "Slow smooth camera pullback, settling into a peaceful still composition.",
+      "narration": "And so the lesson lived on: when a story is passed on, a generation carries it forward.",
+      "subtitle": "And so the lesson lived on: when a story is passed on, a generation carries it forward.",
+      "music_cue": "Emotional musical resolution, fading out cleanly."
+    }
+  ],
+  "end_card": {
+    "duration_seconds": 3,
+    "text": "Created with AI-assisted tools. Story and production by the creator.",
+    "background": "black",
+    "font_size": 48
+  }
+}
