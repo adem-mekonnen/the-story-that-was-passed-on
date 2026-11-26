@@ -28,14 +28,9 @@ def get_media_duration_ffprobe(path: Path) -> float:
     """Measure media duration in seconds using ffprobe (with wave fallback for WAV)."""
     ffprobe_bin = shutil.which("ffprobe")
     if not ffprobe_bin:
-        candidates = [
-            Path(".venv/Scripts/ffprobe.exe"),
-            Path("C:/Users/HP/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-9.1-full_build/bin/ffprobe.exe"),
-        ]
-        for c in candidates:
-            if c.exists():
-                ffprobe_bin = str(c)
-                break
+        c = Path(".venv/Scripts/ffprobe.exe")
+        if c.exists():
+            ffprobe_bin = str(c)
 
     if ffprobe_bin:
         cmd = [
@@ -68,14 +63,9 @@ def get_ffmpeg_binary() -> str:
     """Locate ffmpeg executable."""
     ffmpeg_bin = shutil.which("ffmpeg")
     if not ffmpeg_bin:
-        candidates = [
-            Path(".venv/Scripts/ffmpeg.exe"),
-            Path("C:/Users/HP/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-9.1-full_build/bin/ffmpeg.exe"),
-        ]
-        for c in candidates:
-            if c.exists():
-                ffmpeg_bin = str(c)
-                break
+        c = Path(".venv/Scripts/ffmpeg.exe")
+        if c.exists():
+            ffmpeg_bin = str(c)
     if not ffmpeg_bin:
         raise FileNotFoundError("ffmpeg binary could not be found on PATH or standard locations.")
     return ffmpeg_bin

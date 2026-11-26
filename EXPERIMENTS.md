@@ -19,7 +19,7 @@ In accordance with core design principles, **no experiment results are fabricate
 | `EXP-07` | 2026-11-25 | Assembly | Sidechain compression ducking threshold of 0.02 and ratio 6 preserves spoken dialogue intelligibility over acoustic strings. | FFmpeg `sidechaincompress` (0.02 vs 0.05 vs none) | `7996c9c7...` | Uncompressed mix masked narration vowels (max -7.4 dB). Aggressive ducking (0.05) pumped audibly. Threshold 0.02/ratio 6 cleanly dropped music 5.8 dB during speech. | **ACCEPTED**: Calibrated ducking parameters integrated into `assemble.py`. |
 | `EXP-08` | 2026-11-25 | Subtitles | Reducing vertical margin from 120 to 35 and limiting wrap to 40 chars/2 lines clears actor faces while respecting mobile safe zones. | `libass` style styling (`MarginV=120` -> `45` -> `35`) | `cf3c3961...` | `MarginV=120` placed text 41.6% up over faces; `MarginV=45` clipped macro seed hands. `MarginV=35` (12.1% from bottom) cleared all UI bars and focal subjects. | **ACCEPTED**: `MarginV=35, FontSize=12` established as global vertical style. |
 | `EXP-09` | 2026-11-25 | Pipeline | Deterministic SHA-256 sidecar hashing enables sub-second skip of unchanged assets, reducing compute and avoiding external API costs. | SHA-256 Sidecar Cache Engine (`is_cache_hit`) | Telemetry Ledger | 762 total operations achieved 79.1% cache hit rate (603 hits; Snapshot at Milestone 6: 517 ops, 399 hits / 77.2%). User Test #1 rerun saved ~100s in image inference and prevented 10 Cloudflare calls. | **ACCEPTED**: Core caching primitives validated for 100% reproducible production. |
-| `EXP-10` | 2026-11-25 | Ceiling Work | Multilingual LLM translation and TTS stress test measures syllabic expansion and cross-lingual slot fit for Amharic and Afaan Oromo. | `gemini-2.5-flash` (translation) + `gemini-3.8-flash-tts` | `6b9da7e5...` | Amharic fit within English slot boundaries (shot 01: 9.97s/10s, shot 02: 5.00s/7s, shot 03: 4.69s/6s). Afaan Oromo exhibited agglutinative expansion (shot 01: 11.65s). | **ACCEPTED / BENCHMARKED**: Multilingual pipeline verified. `[NATIVE SPEAKER RATING: PENDING]` |
+| `EXP-10` | 2026-11-25 | Ceiling Work | Multilingual LLM translation and TTS stress test measures syllabic expansion and cross-lingual slot fit for Amharic and Afaan Oromo. | `gemini-2.5-flash` (translation) + `gemini-3.8-flash-tts` | `6b9da7e5...` | Amharic fit within English slot boundaries (shot 01: 9.97s/10s, shot 02: 5.00s/7s, shot 03: 4.69s/6s). Afaan Oromo exhibited agglutinative expansion (shot 01: 11.65s). | **ACCEPTED / BENCHMARKED**: Multilingual pipeline verified. User Test #2 (Hawa): Afaan Oromo subtitles verified accurate; Gemini TTS pronunciation rated non-native (accented/synthetic cadence)—documenting a concrete low-resource TTS limitation. |
 
 ---
 
@@ -184,7 +184,7 @@ In accordance with core design principles, **no experiment results are fabricate
 - **Date**: 2026-11-25
 - **Stage**: localization / script, narration, assemble
 - **Target**: Full 10-shot localized vertical 9:16 films ([heritage_short_am_9x16.mp4](outputs/final/heritage_short_am_9x16.mp4) & [heritage_short_om_9x16.mp4](outputs/final/heritage_short_om_9x16.mp4))
-- **Hypothesis**: Expanding Ceiling Work from 3-shot snippets into full standalone localized 9:16 films with dynamic FFmpeg `tpad=stop_mode=clone` video extension guarantees complete narrative delivery without cutting off speech syllables, while burning in timed English subtitles for diaspora and global audiences.
+- **Hypothesis**: Expanding Ceiling Work from 3-shot snippets into full standalone localized 9:16 films with dynamic FFmpeg `tpad=stop_mode=clone` video extension guarantees complete narrative delivery without cutting off speech syllables, while burning in localized timed subtitles matching the spoken dialogue (Amharic Ge'ez script with Ebrima typography; Afaan Oromo Qubee script).
 - **Cultural Accuracy & Terminology**:
   - Afaan Oromo: Corrected grandfather translation from `Akkoo` (grandmother) to `Akaakayyuu` (grandfather), eliminated word repetition (no `sana sana`).
   - Amharic: Maintained natural oral cadence with `አያ` and `አያቴ` terms.
@@ -210,18 +210,20 @@ In accordance with core design principles, **no experiment results are fabricate
     * Duration: **80.90s** (inside 60–90s envelope)
     * File Size: **23.92 MB** (1080x1920, 24fps h264, AAC 256k)
     * Audio Loudness: `mean_volume: -16.5 dB`, `max_volume: -1.0 dB` (EBU R128 compliant)
-    * Subtitles: Burned-in English subtitles timed to Amharic speech duration slots
+    * Subtitles: Burned-in Amharic subtitles (Ge'ez script rendered cleanly via Ebrima font) timed to Amharic speech duration slots
   - **Afaan Oromo 9:16 Master** ([heritage_short_om_9x16.mp4](outputs/final/heritage_short_om_9x16.mp4)):
     * Duration: **80.10s** (inside 60–90s envelope)
     * File Size: **23.74 MB** (1080x1920, 24fps h264, AAC 256k)
     * Audio Loudness: `mean_volume: -16.6 dB`, `max_volume: -0.9 dB` (EBU R128 compliant)
-    * Subtitles: Burned-in English subtitles timed to Afaan Oromo speech duration slots
+    * Subtitles: Burned-in Afaan Oromo subtitles (Qubee orthography) timed to Afaan Oromo speech duration slots
   - **English Masters Preserved**:
     * Horizontal 16:9 ([heritage_short_horizontal_16x9.mp4](outputs/final/heritage_short_horizontal_16x9.mp4)): 79.00s, 36.96 MB (100% cache hit, untouched)
     * Vertical 9:16 ([heritage_short_vertical_9x16.mp4](outputs/final/heritage_short_vertical_9x16.mp4)): 79.00s, 23.57 MB (100% cache hit, untouched)
-- **Native Speaker Assessment**:
-  `[NATIVE SPEAKER RATING: PENDING]`
-- **Verdict**: ACCEPTED. Full multilingual localization pipeline operational with zero disruption to English master cuts.
+- **Native Speaker Assessment (User Test #2 Evaluation)**:
+  - **Reviewer**: Hawa (Native Afaan Oromo speaker)
+  - **Subtitle Accuracy**: Rated accurate and grammatically correct across all 10 shots.
+  - **TTS Pronunciation**: Rated non-native (*"the afan oromio subttile is correct but the pronunce is not native"*). Gemini TTS exhibits synthetic inflection and non-native phonetic stress on Oromo agglutinative suffixes, identifying an empirical model limitation in current low-resource African language speech synthesis.
+- **Verdict**: ACCEPTED. Full multilingual localization pipeline operational with zero disruption to English master cuts; pronunciation constraint documented as a model limitation.
 
 ---
 

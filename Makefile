@@ -10,7 +10,7 @@ validate:
 	python -m pipeline.run --dry-run
 
 test:
-	pytest tests/ -v
+	python -m pytest tests/ -v
 
 install:
-	pip install -r requirements.txt
+	python -m pip install -r requirements.txt

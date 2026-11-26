@@ -2,6 +2,7 @@
 
 import json
 from pathlib import Path
+import shutil
 import subprocess
 
 FILES = [
@@ -13,8 +14,8 @@ FILES = [
     Path("outputs/final/heritage_short_horizontal_16x9.mp4"),
 ]
 
-FFPROBE = r"C:\Users\HP\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-9.1-full_build\bin\ffprobe.exe"
-FFMPEG = r"C:\Users\HP\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-9.1-full_build\bin\ffmpeg.exe"
+FFMPEG = shutil.which("ffmpeg") or "ffmpeg"
+FFPROBE = shutil.which("ffprobe") or "ffprobe"
 
 print("=" * 95)
 print(f"{'Film Cut':<42} | {'Duration':<9} | {'Size':<9} | {'Resolution':<11} | {'FPS':<6} | {'Audio'}")

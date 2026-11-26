@@ -71,3 +71,13 @@ Conducted with 3 real listeners representing diaspora youth, sound design, and c
      - Introduced per-shot `voice` and `tts_style` overrides in `storyboard.schema.json` and `pipeline/stages/narration.py`. Assigned `shot_03` to `voice: "Zephyr"` (`tts_style: "curious young child asking a heartfelt question, natural and gentle"`) and `shot_09` to `voice: "Charon"` (`tts_style: "warm wise elderly grandfather speaking gently, unhurried"`), reserving `Puck` for third-person narrator shots.
      - Resolved the acoustic instrumentation note by replacing the placeholder synth drone with our genuine `ACE-Step 1.5` score (72 BPM, D minor, acoustic krar, masenqo, and washint).
      - Documented the Amharic and Afaan Oromoo multilingual ceiling benchmark as `EXP-10` in our research roadmap.
+
+### User Test #2 (Near-Final Cut Review)
+Conducted on mobile phone displays with 3 real viewers reviewing the 9:16 vertical cuts:
+
+- **Ahmed**: *"The images for the grandfather should look authentically Ethiopian—dark-skinned/Black, not light-skinned/white."* (Original note: *"the images for the grandfather is should be looks ethiopian culture which is black not white"*)
+- **Hawa**: *"The Afaan Oromo subtitle is correct, but the pronunciation is not native."* (Original note: *"the afan oromio subttile is correct but the pronunce is not native"*)
+- **Osman**: *"Include more authentic Ethiopian culture in the images and make the narration sound native across all three languages."* (Original note: *"include the ethiopian culture on the images and make native for the three language"*)
+
+#### Actions & Decisions Taken:
+Logged Hawa's native-speaker evaluation of Afaan Oromo TTS pronunciation as a verified model limitation in `EXPERIMENTS.md` (`EXP-10`) and `FAILURES.md`, recorded Ahmed and Osman's cultural-representation and skin-tone prompt constraints for v2 visual iteration, and confirmed the 79s English master cut ready for delivery.

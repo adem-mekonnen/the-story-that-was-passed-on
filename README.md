@@ -21,7 +21,7 @@ A contract-driven, deterministic, and fully reproducible AI media production pip
 | [heritage_short_am_9x16.mp4](outputs/final/heritage_short_am_9x16.mp4) | Amharic (`am`) | 9:16 | 1080x1920 | 80.90s | 23.92 MB | -14 LUFS (EBU R128) |
 | [heritage_short_om_9x16.mp4](outputs/final/heritage_short_om_9x16.mp4) | Afaan Oromo (`om`) | 9:16 | 1080x1920 | 80.10s | 23.74 MB | -14 LUFS (EBU R128) |
 
-All vertical 9:16 cuts feature mobile safe-area English subtitles (`MarginV=35, FontSize=12, Outline=2`), blurred pillarboxing for multi-person compositions, dynamic `tpad` video frame extensions, and native 3-second AI disclosure end cards.
+All vertical 9:16 cuts feature mobile safe-area subtitles (burned English subtitles on the master cut, localized Amharic and Afaan Oromo subtitles on the regional cuts; `MarginV=35, FontSize=12, Outline=2`), blurred pillarboxing for multi-person compositions, dynamic `tpad` video frame extensions, and native 3-second AI disclosure end cards.
 
 ---
 
@@ -95,6 +95,10 @@ python -m pipeline.run --no-gpu --language om
 
 *(Alternatively, run `make film` on systems with `make` installed).*
 
+### Clean Clone Execution Modes
+- **Without API keys (validation & unit tests):** Run `python -m pytest -v` and `python -m pipeline.run --dry-run` to verify schema validation, business rules, caching, and retry logic with zero credentials.
+- **Full pipeline with free-tier API keys (no GPU required):** Add `GEMINI_API_KEY`, `CF_ACCOUNT_ID`, and `CF_API_TOKEN` to `.env` and run `python -m pipeline.run --no-gpu` (uses Cloudflare FLUX.2 Klein 4B, Gemini TTS, FFmpeg Ken Burns video fallback, and either `outputs/music/music_master_83s.wav` or the automatic FFmpeg ambient chord fallback).
+
 ---
 
 ## 3. Offline & GPU Fallback Bridge
@@ -122,7 +126,7 @@ The pipeline is engineered to run seamlessly across local workstations, cloud GP
 ├── COSTS.md                            # Comprehensive runs.jsonl telemetry and cost ledger
 ├── DESIGN.md                           # Audience, design rationale, and User Test #1
 ├── ETHICS.md                           # AI ethics, composite likenesses, and provenance
-├── FAILURES.md                         # Authentic production log of Failures 1 through 12
+├── FAILURES.md                         # Authentic production log of Failures 1 through 13
 ├── EXPERIMENTS.md                      # Systematic scientific experiments (EXP-01 - EXP-10)
 ├── pytest.ini                          # Pytest configuration (testpaths = tests)
 ├── requirements.txt                    # Python package dependencies
@@ -143,7 +147,7 @@ The pipeline is engineered to run seamlessly across local workstations, cloud GP
 │   ├── narration_am/                   # Amharic narration WAVs per shot
 │   ├── narration_om/                   # Afaan Oromo narration WAVs per shot
 │   ├── references/                     # Chosen character candidate portraits (v1, v1, v3)
-│   ├── rough_cut/                      # Intermediate rough cuts (16:9 and 9:16)
+│   ├── radio_cut/                      # Intermediate radio cuts (16:9 and 9:16)
 │   └── shots/                          # 10 Video shot clips (24fps H.264)
 ├── pipeline/
 │   ├── core.py                         # SHA-256 sidecar caching, atomic I/O, tenacity retry

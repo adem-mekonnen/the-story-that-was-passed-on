@@ -2,6 +2,10 @@
 .venv/
 __pycache__/
 *.pyc
+.pytest_cache/
 outputs/*
 !outputs/.gitkeep
+!outputs/music/
+outputs/music/*
+!outputs/music/kaggle_runs.jsonl
 scratch/

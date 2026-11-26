@@ -46,7 +46,7 @@ flowchart TD
 - **Multilingual Support**: Supports `--language {en, am, om}`:
   - Amharic ([content/am/narration.json](content/am/narration.json)): Preserves natural oral cadence with familial terms ("አያ", "አያቴ").
   - Afaan Oromo ([content/om/narration.json](content/om/narration.json)): Strictly corrects "Grandfather" to **"Akaakayyuu"** (avoiding *"Akkoo"*, grandmother) and eliminates repetitive phrases (no *"sana sana"*).
-  - Emits timed English subtitles ([outputs/subtitles_am.srt](outputs/subtitles_am.srt), [outputs/subtitles_om.srt](outputs/subtitles_om.srt)) for cross-cultural accessibility.
+  - Emits localized timed subtitles ([outputs/subtitles_am.srt](outputs/subtitles_am.srt) in Ge'ez/Ebrima, [outputs/subtitles_om.srt](outputs/subtitles_om.srt) in Qubee/Arial) matching the target spoken language.
 
 ### Stage 2: Narration & Speech Synthesis ([pipeline/stages/narration.py](pipeline/stages/narration.py))
 - **Provider & Model**: Google Gemini Interactions API (`POST https://generativelanguage.googleapis.com/v1beta/interactions`) utilizing `gemini-3.8-flash-tts` with fallback failover to `gemini-3.1-flash-tts-preview`.
@@ -64,6 +64,8 @@ flowchart TD
 - **Reference Conditioning**: Downscales reference images in memory to $< 512\times 512$ (`(448, 448)`) PNG bytes attached as `input_image_0` and `input_image_1` to enforce character facial, garment, and ethnic consistency.
 
 ### Stage 4: Video Shot Generation ([pipeline/stages/shots.py](pipeline/stages/shots.py))
+> **Production Note:** Wan 2.2 produced no final clips due to Kaggle T4 16 GB system RAM OOM limits (Failure #11). All 10 final video shots use the deterministic FFmpeg Ken Burns fallback.
+
 - **Kaggle Wan 2.2 Bridge**: Checks for GPU-generated clips at `outputs/shots/wan_{shot_id}.mp4` from [notebooks/wan22_kaggle.ipynb](notebooks/wan22_kaggle.ipynb).
 - **FFmpeg Ken Burns Fallback (`--no-gpu`)**: When executing without GPU or following Kaggle's T4 system RAM OOM crash, synthesizes smooth 24 fps H.264 video clips using programmatic motion choreography. Rather than matching natural-language `motion_prompt` tokens, the generator deterministically cycles through 4 standardized camera motions based on `shot_index % 4`:
   - `shot_index % 4 == 0` (`zoom_in_center`): `zoompan=z='min(zoom+0.0008,1.15)':d={total_frames}:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x704:fps=24`
@@ -95,7 +97,7 @@ Every intermediate asset (`.png`, `.wav`, `.mp4`, `.srt`) is paired with an adja
 
 $$\text{hash} = \text{SHA-256}\Big(\text{JSON}(\text{sorted\_inputs})\Big)$$
 
-Before executing any generation step, `is_cache_hit(target_path, expected_hash)` verifies that the output exists and its sidecar matches. This delivers an overall **77.4% cache hit rate**, eliminating redundant cloud API calls and accelerating local iteration cycles.
+Before executing any generation step, `is_cache_hit(target_path, expected_hash)` verifies that the output exists and its sidecar matches. This delivers an overall **79.1% cache hit rate (603/762 operations)**, eliminating redundant cloud API calls and accelerating local iteration cycles.
 
 ### Atomic File I/O
 All asset writes utilize `atomic_write_bytes()`:

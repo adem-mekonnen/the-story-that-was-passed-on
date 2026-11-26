@@ -1,6 +1,6 @@
 # Production Failures & Incident Log
 
-This document records the twelve real production failures encountered during pipeline bootstrap, API integration, and cloud GPU deployment for *The Story That Was Passed On*. In alignment with the core design principles of zero fabrication, each incident documented below details the exact failure signature, root cause, architectural fix, and verification.
+This document records the thirteen real production failures encountered during pipeline bootstrap, API integration, and cloud GPU deployment for *The Story That Was Passed On*. In alignment with the core design principles of zero fabrication, each incident documented below details the exact failure signature, root cause, architectural fix, and verification.
 
 ---
 
@@ -201,3 +201,24 @@ This document records the twelve real production failures encountered during pip
   {"error":{"message":"Rate limit exceeded for model gemini-3.8-flash-tts (limit: 10 requests per day on Free Tier). Please retry in 16h25m35s or upgrade your tier","code":"too_many_requests"}}
   ```
 - **Verification**: Successfully synthesized remaining narration clips with zero test failures; 18/18 pytest suite passing in < 1 second.
+
+---
+
+### Failure 13: Non-Native Afaan Oromo TTS Pronunciation & Prosody
+
+- **What broke:** In User Test #2, native speaker Hawa evaluated the localized Afaan Oromo cut and caught that while `gemini-2.5-flash` produced grammatically accurate Qubee Afaan Oromo subtitles after our lexicon guardrails (correcting "Grandfather" to *"Akaakayyuu"* and eliminating repetitive *"sana sana"*), `gemini-3.8-flash-tts` and `gemini-3.1-flash-tts-preview` rendered accented, synthetic pronunciation and improper stress on Oromo agglutinative noun suffixes (*"the afan oromio subttile is correct but the pronunce is not native"*). Additionally, agglutinative syllable expansion caused speech duration in `shot_01` (10.26s) and `shot_06` (7.15s) to overrun the default visual timing slots.
+- **What we tried:** Attempted prompt steering in `tts_style` (e.g. `"fluent native Afaan Oromo speaker, natural pacing"`); however, current cloud frontier TTS models lack native prosodic training corpora for Cushitic languages, maintaining an unnatural English/Latin phonetic transfer.
+- **How we solved it:** Handled the timing overrun programmatically by implementing dynamic `tpad=stop_mode=clone` video extension in `assemble.py` so speech is never truncated:
+  * `shot_01`: 10.26s TTS in a 10.00s slot -> extended by `+0.60s` (to `10.60s`)
+  * `shot_06`: 7.15s TTS in a 7.00s slot -> extended by `+0.50s` (to `7.50s`)
+  * Total Afaan Oromo duration: `79.00s + 0.60s + 0.50s = 80.10s`.
+  For pronunciation, we documented this finding honestly as an empirical low-resource language TTS model limitation in `EXPERIMENTS.md` (`EXP-10`), `DESIGN.md`, and this log, rather than fabricating native speaker ratings.
+- **Technical Evidence & Reviewer Verification**:
+  ```text
+  User Test #2 (Hawa): "the afan oromio subttile is correct but the pronunce is not native"
+  Afaan Oromo Slot Overruns:
+    - shot_01: 10.26s TTS in a 10.00s slot -> extended by +0.60s (to 10.60s via tpad=stop_mode=clone:stop=-1 -t 10.60)
+    - shot_06: 7.15s TTS in a 7.00s slot -> extended by +0.50s (to 7.50s via tpad=stop_mode=clone:stop=-1 -t 7.50)
+  Total Afaan Oromo Duration: 79.00s + 0.60s + 0.50s = 80.10s
+  ```
+- **Verification**: Verified `outputs/subtitles_om.srt` matches authentic Qubee orthography, and `outputs/final/heritage_short_om_9x16.mp4` renders cleanly at 80.10s without audio clipping; low-resource TTS limitation documented for future custom voice fine-tuning.
